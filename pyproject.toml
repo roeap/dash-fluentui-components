@@ -1,0 +1,111 @@
+[tool.poetry]
+name = "dash-fluentui-components"
+version = "0.0.0"
+description = "FluentUI components for Plotly Dash."
+authors = ["Robert Pack <robstar.pack@gmail.com>"]
+license = "Proprietary"
+readme = "README.md"
+classifiers = [
+  "Framework :: Dash",
+  "Intended Audience :: Data Scientists",
+  "Topic :: Scientific/Engineering",
+  "Topic :: Scientific/Engineering :: Information Analysis",
+]
+# we have to tell poetry to include all *.py files, which may seem strange for a python package... :)
+# reason being that these files are largely auto-generated and
+include = [
+  "dash_fluentui_components/*.py",
+  "dash_fluentui_components/dash_fluentui_components.min.js",
+  "dash_fluentui_components/dash_fluentui_components.min.js.map",
+  "dash_fluentui_components/metadata.json",
+  "dash_fluentui_components/package-info.json",
+  "package.json",
+]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+importlib-metadata = { version = ">=1.7.0", python = "< 3.8" }
+
+[tool.poetry.dev-dependencies]
+black = "^22.10.0"
+dash = { version = "^2.7", extras = ["dev"] }
+detect-secrets = "^1.4.0"
+pre-commit = "^2.20.0"
+pytest = "^6.0.1"
+pytest-datadir = ">=1.3.0"
+pytest-cov = ">=2.7.1"
+ruff = "^0.0.182"
+
+[tool.poetry.group.docs.dependencies]
+mkdocs-techdocs-core = "^1"
+
+[tool.poetry.group.release.dependencies]
+python-semantic-release = "^7.32.2"
+wheel = "^0.37.1"
+
+[tool.black]
+line-length = 120
+target-version = ['py38']
+include = '\.pyi?$'
+
+[tool.ruff]
+line-length = 120
+select = [
+  "B", # flake8-bugbear
+  "C", # flake8-comprehensions
+  "E", # pycodestyle errors
+  "F", # pyflakes
+  "I", # isort
+  "S", # flake8-bandit
+  "W", # pycodestyle warnings
+]
+exclude = [
+  ".bzr",
+  ".direnv",
+  ".eggs",
+  ".git",
+  ".hg",
+  ".mypy_cache",
+  ".nox",
+  ".pants.d",
+  ".ruff_cache",
+  ".svn",
+  ".tox",
+  ".venv",
+  "__pypackages__",
+  "_build",
+  "buck-out",
+  "build",
+  "dist",
+  "node_modules",
+  "venv",
+  "dash_fluentui_components/__init__.py",
+]
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+target-version = "py39"
+
+[tool.ruff.isort]
+known-first-party = ["argus"]
+
+[tool.ruff.per-file-ignores]
+"test_*" = [
+  "S101", # assert staments allowed in tests
+]
+"dash_fluentui_components/*" = [
+  "E501", # line too long
+  "W605",
+]
+
+[tool.semantic_release]
+version_toml = "pyproject.toml:tool.poetry.version"
+version_source = "commit"
+branch = "main"
+build_command = "poetry build"
+upload_to_repository = true
+repository = "ArgusPyPI"
+repository_url = "https://pkgs.dev.azure.com/basf4dev/_packaging/ArgusPyPI/pypi/upload/"
+major_on_zero = false
+commit_subject = "build(release): v{version}"
+commit_author = "AZ Pipeline Agent <agent@azurepipelines.com>"
+hvcs_domain = "dev.azure.com/basf4dev"

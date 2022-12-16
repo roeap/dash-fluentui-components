@@ -1,0 +1,67 @@
+export type Option = {
+    label: string;
+    value: string | number;
+    disabled?: boolean;
+    icon?: string;
+};
+
+/**
+ * Every Dash components are given these props.
+ * Use with your own props:
+ * ```
+ * type Props = {
+ *     my_prop: string;
+ * } & DashComponentProps;
+ * ```
+ * Recommended to use `type` instead of `interface` so you can define the
+ * order of props with types concatenation.
+ */
+export type DashComponentProps = {
+    /**
+     * Unique ID to identify this component in Dash callbacks.
+     */
+    id?: string;
+    /**
+     * A unique identifier for the component, used to improve
+     * performance by React.js while rendering components
+     * See https://reactjs.org/docs/lists-and-keys.html for more info
+     */
+    key?: string;
+    /**
+     * Update props to trigger callbacks.
+     */
+    // eslint-disable-next-line
+    setProps?: (props: Record<string, any>) => void;
+};
+
+/**
+ * Components that can be styles from Dash via `styles` or `class_name` props.
+ */
+export type StyledComponentProps = {
+    /**
+     * Defines CSS styles which will override styles previously set.
+     */
+    style?: object;
+    /**
+     * Often used with CSS to style elements with common properties.
+     */
+    class_name?: string;
+};
+
+/**
+ * Object that holds the loading state object coming from dash-renderer
+ */
+export type DashLoadingState = {
+    /**
+     * Determines if the component is loading or not
+     */
+    is_loading: boolean;
+    /**
+     * Holds which property is loading
+     */
+    prop_name: string;
+    /**
+     * Holds the name of the component that is loading
+     */
+    component_name: string;
+};

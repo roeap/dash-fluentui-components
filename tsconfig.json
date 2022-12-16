@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "baseUrl": "src",
+    "inlineSources": true,
+    "sourceMap": true,
+    "esModuleInterop": true
+  },
+  "exclude": ["node_modules"]
+}
