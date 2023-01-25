@@ -42,6 +42,15 @@ format:
     poetry run black .
     poetry run ruff --fix .
 
+# Remove dist & build directories
+clean:
+    rm -rf dist
+    rm -rf build
+
+# Package the application for distribution using python wheel.
+package: clean generate
+    poetry build
+
 _run-app:
     poetry run python -m app
 
