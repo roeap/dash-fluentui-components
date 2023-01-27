@@ -36,9 +36,6 @@ import Label from "./components/text/Label";
 import PagesWithSidebar from "./components/templates/PagesWithSidebar";
 import Page from "./components/templates/Page";
 
-import { initializeIcons } from "@fluentui/react";
-initializeIcons(undefined, { disableWarnings: true });
-
 export {
     FluentProvider,
     Button,

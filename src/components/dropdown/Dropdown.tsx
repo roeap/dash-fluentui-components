@@ -1,19 +1,41 @@
-import React, { useCallback, useMemo } from "react";
-import { Dropdown as FabricDropdown } from "@fluentui/react/lib/Dropdown";
-import { Icon } from "@fluentui/react/lib/Icon";
-import { generateOptions } from "../../utilities/dashCompat";
-import {
-    DashComponentProps,
-    DashLoadingState,
-    StyledComponentProps,
-    Option,
-} from "../../props";
+import React, { useCallback } from "react";
+import { Dropdown as FabricDropdown, Option, DropdownProps } from "@fluentui/react-components/unstable";
+import { makeStyles, shorthands, useId } from "@fluentui/react-components";
+import { DashComponentProps } from "../../props";
+
+const useStyles = makeStyles({
+    root: {
+        // Stack the label above the field with a gap
+        display: 'grid',
+        gridTemplateRows: 'repeat(1fr)',
+        justifyItems: 'start',
+        ...shorthands.gap('2px'),
+        maxWidth: '400px'
+    }
+});
+
+type Option = {
+    /**
+     * The Radio's label.
+     */
+    label: string;
+
+    /**
+     * The Radio's value.
+     */
+    value: string;
+
+    /**
+     * denotes if radio is disabled
+     */
+    disabled?: boolean;
+};
 
 type Props = {
     /**
      * A label to be displayed above the dropdown component.
      */
-    label: string;
+    label?: string;
 
     /**
      * The value of the input. If `multi` is false (the default)
@@ -23,12 +45,12 @@ type Props = {
      * array of items with values corresponding to those in the
      * `options` prop.
      */
-    value?: string | number | string[] | number[];
+    value?: string[];
 
     /**
      * If true, the user can select multiple values
      */
-    multi?: boolean;
+    multiselect?: boolean;
 
     /**
      * Choices to be displayed in the dropdown control. Each item mus have either
@@ -49,28 +71,17 @@ type Props = {
      * If true, the dropdown is disabled and can't be clicked on.
      */
     disabled?: boolean;
-    /**
-     * Object that holds the loading state object coming from dash-renderer
-     */
-    loading_state?: DashLoadingState;
-} & DashComponentProps &
-    StyledComponentProps;
 
-const onRenderOption = (option) => {
-    return (
-        <div>
-            {option.data && option.data.icon && (
-                <Icon
-                    style={{ marginRight: "8px" }}
-                    iconName={option.data.icon}
-                    aria-hidden="true"
-                    title={option.data.icon}
-                />
-            )}
-            <span>{option.text}</span>
-        </div>
-    );
-};
+    /**
+     * Controls the size of the combobox faceplate
+     */
+    size: "small" | "medium" | "large";
+
+    /**
+     * Controls the colors and borders of the combobox trigger.
+     */
+    appearance: "outline" | "underline" | "filled-darker" | "filled-lighter";
+} & DashComponentProps;
 
 /**
  * ## Overview
@@ -83,80 +94,44 @@ const onRenderOption = (option) => {
  */
 const Dropdown = (props: Props) => {
     const {
-        multi,
+        id,
+        key,
+        multiselect,
         label,
         options,
-        disabled,
-        placeholder,
-        style,
         setProps,
+        disabled,
         value,
+        ...otherProps
     } = props;
-    // const [selectedOptions, setSelectedOptions] = useState();
+    const dropdownId = useId('dropdown-default');
+    const styles = useStyles();
 
-    const onChange = useCallback(
-        (_event, item) => {
-            if (multi) {
-                const currentSelectedKeys = value || [];
-                // @ts-expect-error TODO
-                const newSelectedItems = [...currentSelectedKeys];
-                if (item.selected) {
-                    // add the option if it's checked
-                    newSelectedItems.push(item.key);
-                } else {
-                    // remove the option if it's unchecked
-                    const currIndex = newSelectedItems.indexOf(item.key);
-                    if (currIndex > -1) {
-                        newSelectedItems.splice(currIndex, 1);
-                    }
-                }
-                // setSelectedOptions(newSelectedItems);
-                setProps({ value: newSelectedItems });
-            } else {
-                // setSelectedOptions(item.key);
-                setProps({ value: item.key });
+    const onOptionSelect: DropdownProps["onOptionSelect"] = useCallback(
+        (_event, data) => {
+            if (!disabled && setProps) {
+                setProps({ value: data.selectedOptions });
             }
         },
-        [multi, setProps, value]
+        [disabled, setProps]
     );
-
-    // const onDismiss = useCallback(() => setProps({ value: selectedOptions }), [selectedOptions, setProps]);
-
-    const dropdownStyles = useMemo(() => ({ dropdown: style }), [style]);
-    const optionsTransformed = useMemo(
-        // @ts-expect-error TODO
-        () => generateOptions(options),
-        [options]
-    );
-
-    // useEffect(() => {
-    //   setSelectedOptions(value);
-    // }, [value]);
 
     return (
-        <FabricDropdown
-            placeholder={placeholder}
-            label={label}
-            // @ts-expect-error TODO
-            options={optionsTransformed}
-            selectedKey={multi ? undefined : value}
-            // @ts-expect-error TODO
-            selectedKeys={multi ? value : undefined}
-            onChange={onChange}
-            // onDismiss={onDismiss}
-            onRenderOption={onRenderOption}
-            multiSelect={multi}
-            styles={dropdownStyles}
-            disabled={disabled}
-        />
+        <div id={id} key={key} className={styles.root}>
+            {label && <label id={dropdownId}>{label}</label>}
+            <FabricDropdown aria-labelledby={dropdownId} multiselect={multiselect} onOptionSelect={onOptionSelect} selectedOptions={value} {...otherProps}>
+                {options.map(option => <Option key={option.value} disabled={option.disabled} >{option.label}</Option>)}
+            </FabricDropdown>
+        </div>
     );
 };
 
 Dropdown.defaultProps = {
-    label: "",
+    size: "medium",
     options: [],
     disabled: false,
-    multi: false,
+    multiselect: false,
+    appearance: "outline",
 };
 
 export default Dropdown;
