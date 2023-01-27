@@ -6,7 +6,7 @@ import { withHarness } from "./withHarness";
 
 export default {
     component: Checkbox,
-    title: "Checkbox",
+    title: "choice/Checkbox",
     argTypes: {
         id: { table: { disable: true } },
         key: { table: { disable: true } },

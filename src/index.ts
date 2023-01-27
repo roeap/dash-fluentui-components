@@ -9,7 +9,7 @@ import Dialog from "./components/dialog/Dialog";
 
 import Card from "./components/card/Card";
 import Checkbox from "./components/checkbox/Checkbox";
-import ChoiceGroup from "./components/choice_group/ChoiceGroup";
+import ChoiceGroup from "./components/radio/RadioGroup";
 import ComboBox from "./components/dropdown/ComboBox";
 import DatePicker from "./components/date_picker/DatePicker";
 

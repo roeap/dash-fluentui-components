@@ -33,7 +33,7 @@ def cb_open_dialog(n_clicks: int, curr_open: bool):
     raise PreventUpdate
 
 
-app.layout = dfc.FluentProvider(theme="dark", children=html.Div(dfc.PagesWithSidebar([page1, page2])))
+app.layout = dfc.FluentProvider(theme="dark", children=dfc.PagesWithSidebar([page1, page2], selected_key="page-1"))
 
 if __name__ == "__main__":
     app.run_server(debug=True)
