@@ -87,8 +87,8 @@ export const PagesWithSidebar = (props: Props) => {
         selected_key,
         children,
         sidebar_width,
-        collapsible,
-        sidebar_collapsed_width,
+        // collapsible,
+        // sidebar_collapsed_width,
         setProps,
     } = props;
     const classes = useStyles();

@@ -99,6 +99,7 @@ const RadioGroup = (props: Props) => {
             >
                 {options.map((option) => (
                     <Radio
+                        key={option.value}
                         label={option.label}
                         value={option.value}
                         disabled={option.disabled}
