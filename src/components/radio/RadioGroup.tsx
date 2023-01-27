@@ -1,12 +1,20 @@
 import React, { useCallback } from "react";
-import { RadioGroup as FluentRadioGroup, Label, useId, makeStyles, tokens, Radio, RadioGroupProps } from "@fluentui/react-components";
-import {  DashComponentProps } from "../../props";
+import {
+    RadioGroup as FluentRadioGroup,
+    Label,
+    useId,
+    makeStyles,
+    tokens,
+    Radio,
+    RadioGroupProps,
+} from "@fluentui/react-components";
+import { DashComponentProps } from "../../props";
 
 const useStyles = makeStyles({
     field: {
-        display: 'grid',
-        gridRowGap: tokens.spacingVerticalS
-    }
+        display: "grid",
+        gridRowGap: tokens.spacingVerticalS,
+    },
 });
 
 type Option = {
@@ -65,8 +73,9 @@ type Props = {
  */
 const RadioGroup = (props: Props) => {
     const styles = useStyles();
-    const labelId = useId('label');
-    const { id, key, disabled, label, options, setProps, ...otherProps } = props;
+    const labelId = useId("label");
+    const { id, key, disabled, label, options, setProps, ...otherProps } =
+        props;
 
     const onChange: RadioGroupProps["onChange"] = useCallback(
         (_ev, data) => {
@@ -82,8 +91,19 @@ const RadioGroup = (props: Props) => {
     return (
         <div id={id} key={key} className={styles.field}>
             {label && <Label id={labelId}>{label}</Label>}
-            <FluentRadioGroup {...otherProps} disabled={disabled} aria-labelledby={labelId} onChange={onChange}>
-                {options.map((option) => <Radio label={option.label} value={option.value} disabled={option.disabled} />)}
+            <FluentRadioGroup
+                {...otherProps}
+                disabled={disabled}
+                aria-labelledby={labelId}
+                onChange={onChange}
+            >
+                {options.map((option) => (
+                    <Radio
+                        label={option.label}
+                        value={option.value}
+                        disabled={option.disabled}
+                    />
+                ))}
             </FluentRadioGroup>
         </div>
     );

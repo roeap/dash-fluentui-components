@@ -1,6 +1,7 @@
 import React, { useCallback, FC } from "react";
 import {
-    Card as FluentCard, CardProps
+    Card as FluentCard,
+    CardProps,
 } from "@fluentui/react-components/unstable";
 import {
     DashComponentProps,
@@ -74,7 +75,7 @@ Card.defaultProps = {
     appearance: "filled",
     orientation: "vertical",
     size: "medium",
-    selected: false
+    selected: false,
 };
 
 export default Card;

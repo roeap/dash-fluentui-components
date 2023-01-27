@@ -17,7 +17,7 @@ export default {
 
 export const Basic: ComponentStory<typeof RadioGroup> = (args) => {
     const [props, setProps] = useState({ value: undefined });
-    return <RadioGroup setProps={setProps} {...args} {...props}/>;
+    return <RadioGroup setProps={setProps} {...args} {...props} />;
 };
 
 Basic.args = {

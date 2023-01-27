@@ -6,5 +6,9 @@
     "source.fixAll": true
   },
   "python.formatting.provider": "none",
-  "ruff.args": ["--extend-ignore", "dash_fluentui_components/__init__.py"]
+  "ruff.args": [
+    "--extend-ignore",
+    "dash_fluentui_components/__init__.py"
+  ],
+  "editor.formatOnSave": true
 }

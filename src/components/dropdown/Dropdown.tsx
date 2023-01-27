@@ -1,17 +1,21 @@
 import React, { useCallback } from "react";
-import { Dropdown as FabricDropdown, Option, DropdownProps } from "@fluentui/react-components/unstable";
+import {
+    Dropdown as FabricDropdown,
+    Option,
+    DropdownProps,
+} from "@fluentui/react-components/unstable";
 import { makeStyles, shorthands, useId } from "@fluentui/react-components";
 import { DashComponentProps } from "../../props";
 
 const useStyles = makeStyles({
     root: {
         // Stack the label above the field with a gap
-        display: 'grid',
-        gridTemplateRows: 'repeat(1fr)',
-        justifyItems: 'start',
-        ...shorthands.gap('2px'),
-        maxWidth: '400px'
-    }
+        display: "grid",
+        gridTemplateRows: "repeat(1fr)",
+        justifyItems: "start",
+        ...shorthands.gap("2px"),
+        maxWidth: "400px",
+    },
 });
 
 type Option = {
@@ -104,7 +108,7 @@ const Dropdown = (props: Props) => {
         value,
         ...otherProps
     } = props;
-    const dropdownId = useId('dropdown-default');
+    const dropdownId = useId("dropdown-default");
     const styles = useStyles();
 
     const onOptionSelect: DropdownProps["onOptionSelect"] = useCallback(
@@ -119,8 +123,18 @@ const Dropdown = (props: Props) => {
     return (
         <div id={id} key={key} className={styles.root}>
             {label && <label id={dropdownId}>{label}</label>}
-            <FabricDropdown aria-labelledby={dropdownId} multiselect={multiselect} onOptionSelect={onOptionSelect} selectedOptions={value} {...otherProps}>
-                {options.map(option => <Option key={option.value} disabled={option.disabled} >{option.label}</Option>)}
+            <FabricDropdown
+                aria-labelledby={dropdownId}
+                multiselect={multiselect}
+                onOptionSelect={onOptionSelect}
+                selectedOptions={value}
+                {...otherProps}
+            >
+                {options.map((option) => (
+                    <Option key={option.value} disabled={option.disabled}>
+                        {option.label}
+                    </Option>
+                ))}
             </FabricDropdown>
         </div>
     );
