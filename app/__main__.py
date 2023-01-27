@@ -1,4 +1,4 @@
-from dash import Dash, Input, Output, callback, callback_context, html
+from dash import Dash, Input, Output, callback, callback_context
 from dash.exceptions import PreventUpdate
 
 import dash_fluentui_components as dfc

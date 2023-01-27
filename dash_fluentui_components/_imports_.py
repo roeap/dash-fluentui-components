@@ -1,7 +1,6 @@
 from .Button import Button
 from .Card import Card
 from .Checkbox import Checkbox
-from .ChoiceGroup import ChoiceGroup
 from .ComboBox import ComboBox
 from .CompoundButton import CompoundButton
 from .DatePicker import DatePicker
@@ -16,6 +15,7 @@ from .PagesWithSidebar import PagesWithSidebar
 from .Panel import Panel
 from .Pivot import Pivot
 from .PivotItem import PivotItem
+from .RadioGroup import RadioGroup
 from .Separator import Separator
 from .Slider import Slider
 from .Text import Text
@@ -30,7 +30,6 @@ __all__ = [
     "ToggleButton",
     "Card",
     "Checkbox",
-    "ChoiceGroup",
     "DatePicker",
     "Dialog",
     "ComboBox",
@@ -40,6 +39,7 @@ __all__ = [
     "Panel",
     "Pivot",
     "PivotItem",
+    "RadioGroup",
     "Separator",
     "Slider",
     "ToggleSlider",

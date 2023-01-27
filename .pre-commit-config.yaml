@@ -13,7 +13,7 @@ repos:
         args: [--markdown-linebreak-ext=md]
 
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: v2.38.0
+    rev: v2.40.0
     hooks:
       - id: commitizen
         stages: [commit-msg]
@@ -31,7 +31,7 @@ repos:
         args: [--py39-plus]
 
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.0.182
+    rev: v0.0.236
     hooks:
       - id: ruff
         args: [--config, pyproject.toml, --fix]
