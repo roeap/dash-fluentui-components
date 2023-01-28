@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import {
-    Dropdown as FabricDropdown,
+    Dropdown as FluentDropdown,
     Option,
     DropdownProps,
 } from "@fluentui/react-components/unstable";
@@ -42,12 +42,7 @@ type Props = {
     label?: string;
 
     /**
-     * The value of the input. If `multi` is false (the default)
-     * then value is just a string that corresponds to the values
-     * provided in the `options` property. If `multi` is true, then
-     * multiple values can be selected at once, and `value` is an
-     * array of items with values corresponding to those in the
-     * `options` prop.
+     * The value of the input.
      */
     value?: string[];
 
@@ -57,12 +52,7 @@ type Props = {
     multiselect?: boolean;
 
     /**
-     * Choices to be displayed in the dropdown control. Each item mus have either
-     * set of keys [`label`, `value`] or [`key`, `text`]. The former is available to
-     * accept options consistent with Dash's build in Dropdown control, while the
-     * latter keys are according to the underlying UI fabric component. Additionally,
-     * a `disabled` and `icon` can be optionally passed. The `icon` property must correspond
-     * to the name of a Fabric icon: https://developer.microsoft.com/en-us/fabric#/styles/web/icons
+     * Choices to be displayed in the dropdown control.
      */
     options?: Option[];
 
@@ -88,19 +78,14 @@ type Props = {
 } & DashComponentProps;
 
 /**
- * ## Overview
- *
- * A Dropdown is a list in which the selected item is always visible, and the others are visible
- * on demand by clicking a drop-down button. They are used to simplify the design and make a
- * choice within the UI. When closed, only the selected item is visible. When users click
- * the drop-down button, all the options become visible. To change the value, users open the
- * list and click another value or use the arrow keys (up and down) to select a new value.
+ * A Dropdown is a selection component composed of a button and a list of options.
+ * The button displays the current selected item or a placeholder, and the list is
+ * visible on demand by clicking the button. Dropdowns are typically used in forms.
  */
 const Dropdown = (props: Props) => {
     const {
         id,
         key,
-        multiselect,
         label,
         options,
         setProps,
@@ -112,7 +97,7 @@ const Dropdown = (props: Props) => {
     const styles = useStyles();
 
     const onOptionSelect: DropdownProps["onOptionSelect"] = useCallback(
-        (_event, data) => {
+        (_ev, data) => {
             if (!disabled && setProps) {
                 setProps({ value: data.selectedOptions });
             }
@@ -123,9 +108,8 @@ const Dropdown = (props: Props) => {
     return (
         <div id={id} key={key} className={styles.root}>
             {label && <label id={dropdownId}>{label}</label>}
-            <FabricDropdown
+            <FluentDropdown
                 aria-labelledby={dropdownId}
-                multiselect={multiselect}
                 onOptionSelect={onOptionSelect}
                 selectedOptions={value}
                 {...otherProps}
@@ -135,7 +119,7 @@ const Dropdown = (props: Props) => {
                         {option.label}
                     </Option>
                 ))}
-            </FabricDropdown>
+            </FluentDropdown>
         </div>
     );
 };

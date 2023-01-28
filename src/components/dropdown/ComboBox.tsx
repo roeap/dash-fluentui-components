@@ -1,289 +1,181 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useMemo } from "react";
 import {
-    ComboBox as FabricComboBox,
-    VirtualizedComboBox,
-    DropdownMenuItemType,
-    Label,
-} from "@fluentui/react";
-import {
-    DashComponentProps,
-    DashLoadingState,
-    StyledComponentProps,
+    Combobox as FluentComboBox,
     Option,
-} from "../../props";
+    ComboboxProps,
+} from "@fluentui/react-components/unstable";
+import { makeStyles, shorthands, useId } from "@fluentui/react-components";
+import Fuse from "fuse.js";
+import { DashComponentProps } from "../../props";
+
+const useStyles = makeStyles({
+    root: {
+        // Stack the label above the field with a gap
+        display: "grid",
+        gridTemplateRows: "repeat(1fr)",
+        justifyItems: "start",
+        ...shorthands.gap("2px"),
+        maxWidth: "400px",
+    },
+});
+
+type Option = {
+    /**
+     * The Radio's label.
+     */
+    label: string;
+
+    /**
+     * The Radio's value.
+     */
+    value: string;
+
+    /**
+     * denotes if radio is disabled
+     */
+    disabled?: boolean;
+};
 
 type Props = {
-    /**
-     * If true, the dropdown is disabled and can't be clicked on.
-     */
-    disabled: boolean;
     /**
      * A label to be displayed above the dropdown component.
      */
     label?: string;
+
+    /**
+     * The value of the input.
+     */
+    value?: string[];
+
+    /**
+     * If true, the user can select multiple values
+     */
+    multiselect?: boolean;
+
+    /**
+     * Choices to be displayed in the dropdown control.
+     */
+    options?: Option[];
+
     /**
      * A string value to be displayed if no item is selected.
      */
     placeholder?: string;
-    /**
-     * The value of the input. If `multi` is false (the default)
-     * then value is just a string that corresponds to the values
-     * provided in the `options` property. If `multi` is true, then
-     * multiple values can be selected at once, and `value` is an
-     * array of items with values corresponding to those in the
-     * `options` prop.
-     */
-    value?: string | number | string[] | number[];
-    /**
-     * Configuration for individual choices within the choice group
-     */
-    options?: Option[];
-    /**
-     * If true, the user can select multiple values
-     */
-    multi?: boolean;
-    /**
-     * If true, VirtualizedComboBox is used. Most useful when
-     * there are al lot of options to display.
-     */
-    virtualized?: boolean;
 
     /**
-     * Whether the ComboBox is free form, meaning that the user input
-     * is not bound to provided options. Defaults to false.
+     * If true, the dropdown is disabled and can't be clicked on.
      */
-    allow_freeform?: boolean;
+    disabled?: boolean;
 
     /**
-     * Whether the ComboBox auto completes. As the user is inputting text,
-     * it will be suggested potential matches from the list of options.
-     * If the combo box is expanded, this will also scroll to the suggested option,
-     * and give it a selected style.
+     * Controls the size of the combobox faceplate
      */
-    auto_complete?: "on" | "off";
+    size: "small" | "medium" | "large";
 
     /**
-     * Whether to use the ComboBoxes width as the menu's width.
+     * Controls the colors and borders of the combobox trigger.
      */
-    use_combo_box_as_menu_width?: boolean;
+    appearance: "outline" | "underline" | "filled-darker" | "filled-lighter";
+
+    freeform?: boolean;
 
     /**
-     * Menu will not be created or destroyed when opened or closed, instead it will be hidden.
-     * This will improve perf of the menu opening but could potentially impact overall perf by
-     * having more elements in the dom. Should only be used when perf is important.
-     * Note: This may increase the amount of time it takes for the comboBox itself to mount.
+     * Maximum number of results returned on search
      */
-    persist_menu?: boolean;
-    /**
-     * Object that holds the loading state object coming from dash-renderer
-     */
-    loading_state?: DashLoadingState;
-} & DashComponentProps &
-    StyledComponentProps;
+    search_max_results: number;
+} & DashComponentProps;
 
-const transformOption = (option: Option) => {
-    if ("value" in option) {
-        return {
-            key: option.value,
-            text: option.label,
-            disabled: option.disabled,
-            data: { icon: option.icon },
-        };
-    } else if ("icon" in option) {
-        // @ts-expect-error TODO
-        option.data = { icon: option.icon };
-    }
-    return option;
-};
-
-const generateOptions = (options) => {
-    // reduce function to merge lists and insert separator element
-    const reducer = (accumulator, currentValue) => [
-        ...accumulator,
-        { key: "divider", text: "-", itemType: DropdownMenuItemType.Divider },
-        ...currentValue,
-    ];
-    let newOptions = [];
-    if (!Array.isArray(options)) {
-        // generate a list containing component specific elements for
-        // creating headers and separators in the dropdown options list
-        const prunedOptions = Object.entries(options).map(([key, value]) => {
-            const options = [
-                {
-                    key: key.toLowerCase() + "Header",
-                    text: key,
-                    itemType: DropdownMenuItemType.Header,
-                },
-            ];
-            // @ts-expect-error TODO
-            options.push(...value.map(transformOption));
-            return options;
-        });
-        newOptions = prunedOptions.reduce(reducer);
-    } else {
-        newOptions = options.map(transformOption);
-    }
-    return newOptions;
+const fuseOptions = {
+    includeScore: true,
+    keys: ["value", "label"],
 };
 
 /**
- * ## Overview
- *
- * A ComboBox is a list in which the selected item is always visible, and the others
- * are visible on demand by clicking a drop-down button or by typing in the input
- * (unless allowFreeform and autoComplete are both false). They are used to simplify
- * the design and make a choice within the UI. When closed, only the selected item is
- * visible. When users click the drop-down button, all the options become visible.
- * To change the value, users open the list and click another value or use the arrow
- * keys (up and down) to select a new value. When collapsed if autoComplete and/or
- * allowFreeform are true, the user can select a new value by typing.
+ * A combo box (Combobox) combines a text field and a dropdown giving people
+ * a way to select an option from a list or enter their own choice.
  */
 const ComboBox = (props: Props) => {
     const {
-        value,
+        id,
+        key,
+        label,
         options,
-        allow_freeform,
-        multi,
-        virtualized,
-        auto_complete,
-        placeholder,
-        disabled,
-        persist_menu,
-        use_combo_box_as_menu_width,
         setProps,
+        disabled,
+        value,
+        search_max_results,
+        ...otherProps
     } = props;
-    const [localValue, setLocalValue] = useState(value);
-    const [localOptions, setLocalOptions] = useState(options);
+    const dropdownId = useId("dropdown-default");
+    const styles = useStyles();
+    const [matchingOptions, setMatchingOptions] = useState([...options]);
+    const [customSearch, setCustomSearch] = useState<string | undefined>();
 
-    const onChange = useCallback(
-        (event, option, index, value) => {
-            if (option) {
-                setLocalValue(option.key);
-                setProps({ value: option.key });
-            } else if (value !== undefined) {
-                const newOption = { key: value, text: value };
-                // @ts-expect-error TODO
-                setLocalOptions((curr) => [...curr, newOption]);
-                setLocalValue(newOption.key);
+    const onChange: ComboboxProps['onChange'] = useMemo(() => {
+        const fuse = new Fuse(options, fuseOptions);
+
+        return (event) => {
+            const value = event.target.value.trim();
+            const matches = fuse
+                .search(value, { limit: search_max_results || 10 })
+                .map((res) => res.item);
+            setMatchingOptions(matches);
+            if (value.length && matches.length < 1) {
+                setCustomSearch(value);
+            } else {
+                setCustomSearch(undefined);
             }
-        },
-        [setLocalValue, setLocalOptions, setProps]
-    );
+        };
+    }, [options, search_max_results]);
 
-    const updateSelectedOptionKeys = useCallback((selectedKeys, option) => {
-        // modify a copy
-        const selectedKeysCopy = [...selectedKeys];
-        const index = selectedKeysCopy.indexOf(option.key);
-        if (option.selected && index < 0) {
-            selectedKeysCopy.push(option.key);
-        } else {
-            selectedKeysCopy.splice(index, 1);
-        }
-        return selectedKeysCopy;
-    }, []);
-
-    const onChangeMulti = useCallback(
-        (event, option, index, value) => {
-            const currentSelectedKeys = localValue || [];
-            if (option) {
-                // User selected/de-selected an existing option
-                setLocalValue(
-                    updateSelectedOptionKeys(currentSelectedKeys, option)
-                );
-            } else if (value !== undefined) {
-                // User typed a freeform option
-                const newOption = { key: value, text: value };
-                const updatedSelectedKeys = [
-                    // @ts-expect-error TODO
-                    ...currentSelectedKeys,
-                    newOption.key,
-                ];
-                if (allow_freeform) {
-                    setLocalValue(updatedSelectedKeys);
-                    // @ts-expect-error TODO
-                    setLocalOptions([...options, newOption]);
+    const onOptionSelect: ComboboxProps["onOptionSelect"] = useCallback(
+        (_ev, data) => {
+            if (!disabled && setProps) {
+                const matchingOption = data.optionText && options.map((o) => o.label).includes(data.optionText);
+                if (matchingOption) {
+                    setCustomSearch(undefined);
+                    setProps({ value: data.selectedOptions });
                 } else {
-                    setLocalValue(updatedSelectedKeys);
+                    setCustomSearch(data.optionText);
+                    setProps({ value: [data.optionText, ...data.selectedOptions] });
                 }
             }
         },
-        [
-            setLocalValue,
-            setLocalOptions,
-            options,
-            localValue,
-            updateSelectedOptionKeys,
-            allow_freeform,
-        ]
+        [disabled, setProps]
     );
 
-    const _onRenderLabel = () => {
-        const { label, disabled } = props;
-        return label ? <Label disabled={disabled}>{label}</Label> : null;
-    };
-
-    const optionsGen = generateOptions(localOptions);
-
-    if (virtualized) {
-        return (
-            <>
-                {_onRenderLabel()}
-                <VirtualizedComboBox
-                    options={optionsGen}
-                    selectedKey={multi ? localValue : value}
-                    onChange={multi ? onChangeMulti : onChange}
-                    onMenuDismissed={
-                        multi
-                            ? () => {
-                                  setProps({ value: localValue });
-                              }
-                            : undefined
-                    }
-                    allowFreeform={allow_freeform}
-                    autoComplete={auto_complete}
-                    placeholder={placeholder}
-                    multiSelect={multi}
-                    disabled={disabled}
-                />
-            </>
-        );
-    }
     return (
-        <>
-            {_onRenderLabel()}
-            <FabricComboBox
-                options={optionsGen}
-                selectedKey={localValue}
-                onChange={multi ? onChangeMulti : onChange}
-                onMenuDismissed={
-                    multi
-                        ? () => {
-                              setProps({ value: localValue });
-                          }
-                        : undefined
-                }
-                allowFreeform={allow_freeform}
-                autoComplete={auto_complete}
-                placeholder={placeholder}
-                multiSelect={multi}
-                disabled={disabled}
-                useComboBoxAsMenuWidth={use_combo_box_as_menu_width}
-                persistMenu={persist_menu}
-            />
-        </>
+        <div id={id} key={key} className={styles.root}>
+            {label && <label id={dropdownId}>{label}</label>}
+            <FluentComboBox
+                aria-labelledby={dropdownId}
+                onOptionSelect={onOptionSelect}
+                onChange={onChange}
+                selectedOptions={value}
+                {...otherProps}
+            >
+                {customSearch ? (
+                    <Option key="freeform" text={customSearch}>
+                        {customSearch}
+                    </Option>
+                ) : null}
+                {matchingOptions.map((option) => (
+                    <Option key={option.value} disabled={option.disabled}>
+                        {option.label}
+                    </Option>
+                ))}
+            </FluentComboBox>
+        </div>
     );
 };
 
 ComboBox.defaultProps = {
+    size: "medium",
     options: [],
     disabled: false,
-    multi: false,
-    auto_complete: "on",
-    virtualized: false,
-    value: "",
-    allow_freeform: false,
-    use_combo_box_as_menu_width: true,
-    persist_menu: false,
+    multiselect: false,
+    appearance: "outline",
+    search_max_results: 10,
 };
 
 export default ComboBox;
