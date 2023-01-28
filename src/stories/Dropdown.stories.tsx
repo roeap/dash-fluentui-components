@@ -1,18 +1,17 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import React, { useState } from "react";
 import Dropdown from "../components/dropdown/Dropdown";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { withHarness, omitArgs } from "./withHarness";
 
 export default {
     component: Dropdown,
     title: "select/Dropdown",
     argTypes: {
-        id: { table: { disable: true } },
-        key: { table: { disable: true } },
-        setProps: { table: { disable: true } },
+        ...omitArgs,
         style: { table: { disable: true } },
         value: { table: { disable: true } },
     },
+    decorators: [withHarness],
 } as ComponentMeta<typeof Dropdown>;
 
 export const Basic: ComponentStory<typeof Dropdown> = (args) => {

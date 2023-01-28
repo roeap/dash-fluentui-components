@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import React, { useState } from "react";
 import { Dialog } from "../components/dialog";
 import { ComponentStory, ComponentMeta } from "@storybook/react";

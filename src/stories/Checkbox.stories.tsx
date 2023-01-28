@@ -2,17 +2,15 @@
 import React, { useState } from "react";
 import Checkbox from "../components/checkbox/Checkbox";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { withHarness } from "./withHarness";
+import { withHarness, omitArgs } from "./withHarness";
 
 export default {
     component: Checkbox,
     title: "choice/Checkbox",
     argTypes: {
-        id: { table: { disable: true } },
-        key: { table: { disable: true } },
+        ...omitArgs,
         style: { table: { disable: true } },
         class_name: { table: { disable: true } },
-        setProps: { table: { disable: true } },
         checked: { table: { disable: true } },
     },
     decorators: [withHarness],

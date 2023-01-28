@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import RadioGroup from "../components/radio/RadioGroup";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { withHarness } from "./withHarness";
+import { withHarness, omitArgs } from "./withHarness";
 
 export default {
     component: RadioGroup,
     title: "choice/RadioGroup",
     argTypes: {
-        id: { table: { disable: true } },
+        ...omitArgs,
         style: { table: { disable: true } },
-        setProps: { table: { disable: true } },
         value: { control: { disable: true } },
     },
     decorators: [withHarness],
