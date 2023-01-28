@@ -1,5 +1,12 @@
 import React, { useCallback } from "react";
-import { Slider as FluentSlider, useId, Label, SliderProps, makeStyles, shorthands } from "@fluentui/react-components";
+import {
+    Slider as FluentSlider,
+    useId,
+    Label,
+    SliderProps,
+    makeStyles,
+    shorthands,
+} from "@fluentui/react-components";
 import { DashComponentProps, StyledComponentProps } from "../../props";
 
 const useStyles = makeStyles({
@@ -62,11 +69,14 @@ const Slider = (props: Props) => {
     const { id, key, value, label, disabled, setProps, ...otherProps } = props;
     const sliderId = useId();
     const styles = useStyles();
-    const onChange: SliderProps["onChange"] = useCallback((_, data) => {
-        if (!disabled && setProps) {
-            setProps({ value: data.value });
-        }
-    }, [disabled, setProps]);
+    const onChange: SliderProps["onChange"] = useCallback(
+        (_, data) => {
+            if (!disabled && setProps) {
+                setProps({ value: data.value });
+            }
+        },
+        [disabled, setProps]
+    );
 
     return (
         <div id={id} key={key} className={styles.root}>

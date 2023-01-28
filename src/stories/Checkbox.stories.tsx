@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import React, { useState } from "react";
 import Checkbox from "../components/checkbox/Checkbox";
 import { ComponentStory, ComponentMeta } from "@storybook/react";

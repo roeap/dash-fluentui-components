@@ -24,7 +24,7 @@ import Separator from "./components/separator/Separator";
 // sliders
 import Slider from "./components/slider/Slider";
 
-import Toggle from "./components/toggle/Toggle";
+import Switch from "./components/switch/Switch";
 
 // text
 import Text from "./components/text/Text";
@@ -55,7 +55,7 @@ export {
     Slider,
     Text,
     Textarea,
-    Toggle,
+    Switch,
     PagesWithSidebar,
     Page,
 };

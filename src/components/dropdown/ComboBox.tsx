@@ -111,7 +111,7 @@ const ComboBox = (props: Props) => {
     const [matchingOptions, setMatchingOptions] = useState([...options]);
     const [customSearch, setCustomSearch] = useState<string | undefined>();
 
-    const onChange: ComboboxProps['onChange'] = useMemo(() => {
+    const onChange: ComboboxProps["onChange"] = useMemo(() => {
         const fuse = new Fuse(options, fuseOptions);
 
         return (event) => {
@@ -131,17 +131,21 @@ const ComboBox = (props: Props) => {
     const onOptionSelect: ComboboxProps["onOptionSelect"] = useCallback(
         (_ev, data) => {
             if (!disabled && setProps) {
-                const matchingOption = data.optionText && options.map((o) => o.label).includes(data.optionText);
+                const matchingOption =
+                    data.optionText &&
+                    options.map((o) => o.label).includes(data.optionText);
                 if (matchingOption) {
                     setCustomSearch(undefined);
                     setProps({ value: data.selectedOptions });
                 } else {
                     setCustomSearch(data.optionText);
-                    setProps({ value: [data.optionText, ...data.selectedOptions] });
+                    setProps({
+                        value: [data.optionText, ...data.selectedOptions],
+                    });
                 }
             }
         },
-        [disabled, setProps]
+        [disabled, setProps, options]
     );
 
     return (

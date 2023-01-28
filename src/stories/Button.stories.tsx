@@ -1,10 +1,7 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-import React from "react";
+import React, { useState } from "react";
 import Button from "../components/button/Button";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { withHarness } from "./withHarness";
-
-const setProps = (): void => {};
 
 export default {
     component: Button,
@@ -22,9 +19,10 @@ export default {
 } as ComponentMeta<typeof Button>;
 
 const Template: ComponentStory<typeof Button> = (args) => {
+    const [props, setProps] = useState({ n_clicks: 0 });
     const { children, ...otherArgs } = args;
     return (
-        <Button setProps={setProps} {...otherArgs}>
+        <Button setProps={setProps} {...otherArgs} {...props}>
             {children}
         </Button>
     );
