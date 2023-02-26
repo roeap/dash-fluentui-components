@@ -12,6 +12,7 @@ import {
     getComponentType,
 } from "../../utilities/dashCompat";
 import { DashComponentProps, DashLoadingState } from "../../props";
+import { ResizePanel, ResizeHandleRight, ResizeContent } from "./ResizePanel";
 
 type Props = {
     /**
@@ -52,23 +53,34 @@ type Props = {
 
 const useStyles = makeStyles({
     root: {
-        display: "grid",
-        gridTemplateRows: "100vh",
+        backgroundColor: tokens.colorNeutralBackground2,
+        display: "flex",
+        height: "100vh",
         width: "100vw",
     },
     sidebar: {
-        gridColumnStart: 1,
-        gridColumnEnd: 1,
+        height: "100vh",
         backgroundColor: tokens.colorNeutralBackground1,
     },
     content: {
-        gridColumnStart: 2,
-        gridColumnEnd: 2,
+        flexGrow: 1,
         backgroundColor: tokens.colorNeutralBackground2,
     },
     menu: { ...shorthands.padding("5px", "5px", "5px", "5px") },
     menuItemSelected: {
         backgroundColor: tokens.colorNeutralBackground1Selected,
+    },
+    resizeHandle: {
+        cursor: "col-resize",
+        width: "3px",
+        height: "100%",
+        borderRightWidth: "1px",
+        borderRightStyle: "solid",
+        borderRightColor: tokens.colorNeutralBackground1Hover,
+        boxSizing: "border-box",
+        ":hover": {
+            backgroundColor: tokens.colorBrandForeground1,
+        },
     },
 });
 
@@ -123,14 +135,18 @@ export const PagesWithSidebar = (props: Props) => {
         <PagesContext.Provider
             value={{ selectedKey: selected_key, cbControls: setControls }}
         >
-            <div
-                className={classes.root}
-                style={{ gridTemplateColumns: `${sidebar_width}px auto` }}
-            >
-                <div className={classes.sidebar}>
-                    {menu}
-                    {controls}
-                </div>
+            <div className={classes.root}>
+                <ResizePanel initialWidth={300} minWidth={200}>
+                    <ResizeContent>
+                        <div className={classes.sidebar}>
+                            {menu}
+                            {controls}
+                        </div>
+                    </ResizeContent>
+                    <ResizeHandleRight>
+                        <div className={classes.resizeHandle} />
+                    </ResizeHandleRight>
+                </ResizePanel>
                 <div className={classes.content}>{children}</div>
             </div>
         </PagesContext.Provider>

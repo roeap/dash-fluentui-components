@@ -14,10 +14,11 @@
   "author": "Robert Pack <robert.pack@basf.com>",
   "dependencies": {
     "@fluentui/react": "^8.103.4",
-    "@fluentui/react-components": "^9.11.1",
+    "@fluentui/react-components": "^9.15.6",
     "@fluentui/react-hooks": "^8.6.14",
     "fuse.js": "^6.6.2",
-    "ramda": "^0.28.0"
+    "ramda": "^0.28.0",
+    "react-draggable": "^4.4.5"
   },
   "devDependencies": {
     "@babel/core": "^7.20.5",

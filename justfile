@@ -15,7 +15,8 @@ generate_ts:
 
 # generaty python modules
 generate_py:
-    poetry run dash-generate-components ./src/components dash_fluentui_components -p package-info.json --ignore \\.test\\.
+    poetry run dash-generate-components ./src/components dash_fluentui_components -p package-info.json --ignore src/components/templates/ResizePanel.tsx
+# --ignore \\.test\\.
 
 # Build the bundle and generate Dash components
 generate: generate_ts generate_py
