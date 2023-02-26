@@ -3,8 +3,10 @@ import {
     Combobox as FluentComboBox,
     Option,
     ComboboxProps,
-} from "@fluentui/react-components/unstable";
-import { makeStyles, shorthands, useId } from "@fluentui/react-components";
+    makeStyles,
+    shorthands,
+    useId,
+} from "@fluentui/react-components";
 import Fuse from "fuse.js";
 import { DashComponentProps } from "../../props";
 

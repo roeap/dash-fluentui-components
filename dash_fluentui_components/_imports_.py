@@ -18,11 +18,10 @@ from .PivotItem import PivotItem
 from .RadioGroup import RadioGroup
 from .Separator import Separator
 from .Slider import Slider
+from .Switch import Switch
 from .Text import Text
 from .Textarea import Textarea
-from .Toggle import Toggle
 from .ToggleButton import ToggleButton
-from .ToggleSlider import ToggleSlider
 
 __all__ = [
     "Button",
@@ -42,12 +41,11 @@ __all__ = [
     "RadioGroup",
     "Separator",
     "Slider",
-    "ToggleSlider",
+    "Switch",
     "Page",
     "PagesWithSidebar",
     "Label",
     "Text",
     "Textarea",
-    "Toggle",
     "FluentProvider",
 ]

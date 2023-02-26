@@ -46,13 +46,13 @@ include = '\.pyi?$'
 [tool.ruff]
 line-length = 120
 select = [
-    "B", # flake8-bugbear
-    "C", # flake8-comprehensions
-    "E", # pycodestyle errors
-    "F", # pyflakes
-    "I", # isort
-    "S", # flake8-bandit
-    "W", # pycodestyle warnings
+    "B",  # flake8-bugbear
+    "C4", # flake8-comprehensions
+    "E",  # pycodestyle errors
+    "F",  # pyflakes
+    "I",  # isort
+    "S",  # flake8-bandit
+    "W",  # pycodestyle warnings
 ]
 exclude = [
     ".bzr",

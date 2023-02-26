@@ -3,8 +3,10 @@ import {
     Dropdown as FluentDropdown,
     Option,
     DropdownProps,
-} from "@fluentui/react-components/unstable";
-import { makeStyles, shorthands, useId } from "@fluentui/react-components";
+    makeStyles,
+    shorthands,
+    useId,
+} from "@fluentui/react-components";
 import { DashComponentProps } from "../../props";
 
 const useStyles = makeStyles({
