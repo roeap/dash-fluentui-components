@@ -5,6 +5,7 @@ import {
     MenuList,
     MenuItem,
     shorthands,
+    Divider,
 } from "@fluentui/react-components";
 import {
     parseChildrenToArray,
@@ -56,15 +57,23 @@ const useStyles = makeStyles({
         backgroundColor: tokens.colorNeutralBackground2,
         display: "flex",
         height: "100vh",
-        width: "100vw",
+        width: "100%",
     },
     sidebar: {
         height: "100vh",
         backgroundColor: tokens.colorNeutralBackground1,
+        display: "flex",
+        flexDirection: "column",
+    },
+    controls: {
+        flexGrow: 1,
+        ...shorthands.padding("5px", "5px", "5px", "8px"),
     },
     content: {
         flexGrow: 1,
         backgroundColor: tokens.colorNeutralBackground2,
+        height: "100vh",
+        display: "flex",
     },
     menu: { ...shorthands.padding("5px", "5px", "5px", "5px") },
     menuItemSelected: {
@@ -128,7 +137,12 @@ export const PagesWithSidebar = (props: Props) => {
                 );
             });
         if (menuItems.length < 1) return null;
-        return <MenuList className={classes.menu}>{menuItems}</MenuList>;
+        return (
+            <div className={classes.menu}>
+                <MenuList>{menuItems}</MenuList>
+                <Divider appearance="brand">Controls</Divider>
+            </div>
+        );
     }, [children, classes, selected_key, setProps]);
 
     return (
@@ -140,7 +154,7 @@ export const PagesWithSidebar = (props: Props) => {
                     <ResizeContent>
                         <div className={classes.sidebar}>
                             {menu}
-                            {controls}
+                            <div className={classes.controls}>{controls}</div>
                         </div>
                     </ResizeContent>
                     <ResizeHandleRight>

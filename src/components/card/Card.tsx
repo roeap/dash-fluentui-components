@@ -1,7 +1,10 @@
-import React, { useCallback, FC } from "react";
+import React, { useCallback, FC, ReactNode } from "react";
 import {
     Card as FluentCard,
     CardProps,
+    CardHeader,
+    CardFooter,
+    CardPreview,
 } from "@fluentui/react-components/unstable";
 import {
     DashComponentProps,
@@ -43,6 +46,15 @@ type Props = {
      * Object that holds the loading state object coming from dash-renderer
      */
     loading_state?: DashLoadingState;
+
+    /**
+     * Content displayed in card header
+     */
+    header?: JSX.Element;
+    /**
+     * Content displayed in card footer
+     */
+    footer?: JSX.Element;
 } & DashComponentProps &
     StyledComponentProps;
 
@@ -51,7 +63,7 @@ type Props = {
  * It's main function is to provide the scaffolding for hosting actions and content for a single topic within a card.
  */
 export const Card: FC<Props> = (props) => {
-    const { children, setProps, ...otherProps } = props;
+    const { children, header, footer, setProps, ...otherProps } = props;
 
     const onSelectionChange: CardProps["onSelectionChange"] = useCallback(
         (_ev, data) => {
@@ -66,7 +78,9 @@ export const Card: FC<Props> = (props) => {
 
     return (
         <FluentCard {...otherProps} onSelectionChange={onSelectionChange}>
-            {children}
+            {header && <CardHeader header={header} />}
+            <CardPreview>{children}</CardPreview>
+            {footer && <CardFooter>{footer}</CardFooter>}
         </FluentCard>
     );
 };

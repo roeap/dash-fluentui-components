@@ -7,6 +7,7 @@ import {
     shorthands,
     useId,
 } from "@fluentui/react-components";
+import { Field } from "@fluentui/react-components/unstable";
 import { DashComponentProps } from "../../props";
 
 const useStyles = makeStyles({
@@ -95,9 +96,6 @@ const Dropdown = (props: Props) => {
         value,
         ...otherProps
     } = props;
-    const dropdownId = useId("dropdown-default");
-    const styles = useStyles();
-
     const onOptionSelect: DropdownProps["onOptionSelect"] = useCallback(
         (_ev, data) => {
             if (!disabled && setProps) {
@@ -108,10 +106,8 @@ const Dropdown = (props: Props) => {
     );
 
     return (
-        <div id={id} key={key} className={styles.root}>
-            {label && <label id={dropdownId}>{label}</label>}
+        <Field id={id} key={key} label={label}>
             <FluentDropdown
-                aria-labelledby={dropdownId}
                 onOptionSelect={onOptionSelect}
                 selectedOptions={value}
                 {...otherProps}
@@ -122,7 +118,7 @@ const Dropdown = (props: Props) => {
                     </Option>
                 ))}
             </FluentDropdown>
-        </div>
+        </Field>
     );
 };
 

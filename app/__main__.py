@@ -1,4 +1,5 @@
-from dash import Dash, Input, Output, callback, callback_context
+import plotly.graph_objects as go
+from dash import Dash, Input, Output, callback, callback_context, dcc, html
 from dash.exceptions import PreventUpdate
 
 import dash_fluentui_components as dfc
@@ -14,7 +15,17 @@ dialog = dfc.Dialog(
     trigger_action=close_dialog,
 )
 
-page1 = dfc.Page(dfc.Button("Button 1"), page_key="page-1", controls=dialog)
+content = html.Div(
+    dcc.Graph(
+        id="plotly-graph",
+        figure=go.Figure(layout={"template": "plotly_dark"}),
+        responsive=True,
+        style={"height": "100%"},
+    ),
+    style={"height": "100%", "with": "100%"},
+)
+
+page1 = dfc.Page(content, page_key="page-1", controls=dialog)
 page2 = dfc.Page(dfc.Button("Button 2"), page_key="page-2", controls=dfc.Button("Control 2"))
 
 
