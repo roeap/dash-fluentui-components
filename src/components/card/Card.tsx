@@ -89,7 +89,6 @@ Card.defaultProps = {
     appearance: "filled",
     orientation: "vertical",
     size: "medium",
-    selected: false,
 };
 
 export default Card;
