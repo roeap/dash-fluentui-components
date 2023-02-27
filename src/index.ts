@@ -15,11 +15,9 @@ import DatePicker from "./components/date_picker/DatePicker";
 
 import Dropdown from "./components/dropdown/Dropdown";
 import MessageBar from "./components/message/MessageBar";
-import Modal from "./components/modal/Modal";
-import Panel from "./components/panel/Panel";
 import Pivot from "./components/pivot/Pivot";
 import PivotItem from "./components/pivot/PivotItem";
-import Separator from "./components/separator/Separator";
+import Separator from "./components/divider/Divider";
 
 // sliders
 import Slider from "./components/slider/Slider";
@@ -47,8 +45,6 @@ export {
     Dropdown,
     Label,
     MessageBar,
-    Modal,
-    Panel,
     Pivot,
     PivotItem,
     Separator,

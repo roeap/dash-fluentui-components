@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
-import { Separator as FabricSeparator } from "@fluentui/react/lib/Separator";
-import { DashComponentProps, StyledComponentProps } from "../../props";
+import { Divider as FluentDivider } from "@fluentui/react-components";
+import { DashComponentProps } from "../../props";
 
 type Props = {
     /**
@@ -11,14 +11,23 @@ type Props = {
     /**
      * Where the content should be aligned in the separator.
      */
-    align_content: "start" | "center" | "end";
+    align_content?: "start" | "center" | "end";
 
     /**
      * Whether the content should be aligned vertically.
      */
     vertical: boolean;
-} & DashComponentProps &
-    StyledComponentProps;
+
+    /**
+     * A divider can have one of the preset appearances. When not specified, the divider has its default appearance.
+     */
+    apperance?: "strong" | "brand" | "subtle" | "default";
+
+    /**
+     * Adds padding to the beginning and end of the divider.
+     */
+    inset?: boolean;
+} & DashComponentProps;
 
 /**
  * ## Overview
@@ -30,16 +39,12 @@ type Props = {
  * is center-aligned by default.
  */
 const Separator = (props: Props) => {
-    const { children, align_content, style, vertical } = props;
+    const { children, align_content, ...otherProps } = props;
 
     return (
-        <FabricSeparator
-            alignContent={align_content}
-            vertical={vertical}
-            styles={{ root: style }}
-        >
+        <FluentDivider alignContent={align_content} {...otherProps}>
             {children}
-        </FabricSeparator>
+        </FluentDivider>
     );
 };
 

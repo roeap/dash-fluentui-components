@@ -3,23 +3,10 @@ import {
     Combobox as FluentComboBox,
     Option,
     ComboboxProps,
-    makeStyles,
-    shorthands,
-    useId,
 } from "@fluentui/react-components";
+import { Field } from "@fluentui/react-components/unstable";
 import Fuse from "fuse.js";
-import { DashComponentProps } from "../../props";
-
-const useStyles = makeStyles({
-    root: {
-        // Stack the label above the field with a gap
-        display: "grid",
-        gridTemplateRows: "repeat(1fr)",
-        justifyItems: "start",
-        ...shorthands.gap("2px"),
-        maxWidth: "400px",
-    },
-});
+import { DashComponentProps, FieldComponentProps } from "../../props";
 
 type Option = {
     /**
@@ -85,7 +72,8 @@ type Props = {
      * Maximum number of results returned on search
      */
     search_max_results: number;
-} & DashComponentProps;
+} & DashComponentProps &
+    FieldComponentProps;
 
 const fuseOptions = {
     includeScore: true,
@@ -98,9 +86,16 @@ const fuseOptions = {
  */
 const ComboBox = (props: Props) => {
     const {
+        // field props
         id,
         key,
         label,
+        validation_message,
+        orientation,
+        validation_state,
+        required,
+        label_size,
+        // dropdown props
         options,
         setProps,
         disabled,
@@ -108,8 +103,6 @@ const ComboBox = (props: Props) => {
         search_max_results,
         ...otherProps
     } = props;
-    const dropdownId = useId("dropdown-default");
-    const styles = useStyles();
     const [matchingOptions, setMatchingOptions] = useState([...options]);
     const [customSearch, setCustomSearch] = useState<string | undefined>();
 
@@ -151,10 +144,17 @@ const ComboBox = (props: Props) => {
     );
 
     return (
-        <div id={id} key={key} className={styles.root}>
-            {label && <label id={dropdownId}>{label}</label>}
+        <Field
+            id={id}
+            key={key}
+            label={label}
+            size={label_size}
+            required={required}
+            validationMessage={validation_message}
+            validationState={validation_state}
+            orientation={orientation}
+        >
             <FluentComboBox
-                aria-labelledby={dropdownId}
                 onOptionSelect={onOptionSelect}
                 onChange={onChange}
                 selectedOptions={value}
@@ -171,7 +171,7 @@ const ComboBox = (props: Props) => {
                     </Option>
                 ))}
             </FluentComboBox>
-        </div>
+        </Field>
     );
 };
 

@@ -15,17 +15,20 @@ dialog = dfc.Dialog(
     trigger_action=close_dialog,
 )
 
-content = html.Div(
-    dcc.Graph(
-        id="plotly-graph",
-        figure=go.Figure(layout={"template": "plotly_dark"}),
-        responsive=True,
-        style={"height": "100%"},
+page1 = dfc.Page(
+    content := html.Div(
+        dcc.Graph(
+            id="plotly-graph",
+            figure=go.Figure(layout={"template": "plotly_dark"}),
+            responsive=True,
+            style={"height": "100%"},
+        ),
+        style={"height": "100%", "with": "100%"},
     ),
-    style={"height": "100%", "with": "100%"},
+    page_key="page-1",
+    controls=dialog,
 )
 
-page1 = dfc.Page(content, page_key="page-1", controls=dialog)
 page2 = dfc.Page(dfc.Button("Button 2"), page_key="page-2", controls=dfc.Button("Control 2"))
 
 

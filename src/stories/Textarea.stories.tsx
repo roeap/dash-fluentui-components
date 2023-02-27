@@ -2,17 +2,15 @@
 import React, { useState } from "react";
 import Textarea from "../components/text/Textarea";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { withHarness } from "./withHarness";
+import { withHarness, omitArgs } from "./withHarness";
 
 export default {
     component: Textarea,
     title: "text/Textarea",
     argTypes: {
-        id: { table: { disable: true } },
-        key: { table: { disable: true } },
+        ...omitArgs,
         style: { table: { disable: true } },
         class_name: { table: { disable: true } },
-        setProps: { table: { disable: true } },
         value: { table: { disable: true } },
     },
     decorators: [withHarness],

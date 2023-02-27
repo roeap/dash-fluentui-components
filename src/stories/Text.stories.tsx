@@ -2,7 +2,7 @@
 import React from "react";
 import Text from "../components/text/Text";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { withHarness } from "./withHarness";
+import { withHarness, omitArgs } from "./withHarness";
 
 const setProps = (): void => {};
 
@@ -10,11 +10,9 @@ export default {
     component: Text,
     title: "text/Text",
     argTypes: {
-        id: { table: { disable: true } },
-        key: { table: { disable: true } },
+        ...omitArgs,
         style: { table: { disable: true } },
         class_name: { table: { disable: true } },
-        setProps: { table: { disable: true } },
     },
     decorators: [withHarness],
 } as ComponentMeta<typeof Text>;

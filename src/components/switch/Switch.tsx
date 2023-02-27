@@ -3,7 +3,8 @@ import {
     Switch as FluentSwitch,
     SwitchProps,
 } from "@fluentui/react-components";
-import { DashComponentProps } from "../../props";
+import { Field } from "@fluentui/react-components/unstable";
+import { DashComponentProps, FieldComponentProps } from "../../props";
 
 type Props = {
     /**
@@ -25,14 +26,29 @@ type Props = {
      * If true, the switch is disabled and can't be clicked on.
      */
     disabled: boolean;
-} & DashComponentProps;
+} & DashComponentProps &
+    FieldComponentProps;
 
 /**
  * A switch represents a physical switch that allows someone to choose between two mutually exclusive options.
  * For example, "On/Off" and "Show/Hide". Choosing an option should produce an immediate result.
  */
 const Switch = (props: Props) => {
-    const { label_postion, disabled, setProps, ...otherProps } = props;
+    const {
+        // field props
+        id,
+        key,
+        label,
+        validation_message,
+        orientation,
+        validation_state,
+        required,
+        label_size,
+        label_postion,
+        disabled,
+        setProps,
+        ...otherProps
+    } = props;
 
     const onChange: SwitchProps["onChange"] = useCallback(
         (_ev, data) => {
@@ -46,13 +62,24 @@ const Switch = (props: Props) => {
     );
 
     return (
-        <FluentSwitch
-            label={props.label}
-            disabled={props.disabled}
-            labelPosition={label_postion}
-            onChange={onChange}
-            {...otherProps}
-        />
+        <Field
+            id={id}
+            key={key}
+            label={label}
+            size={label_size}
+            required={required}
+            validationMessage={validation_message}
+            validationState={validation_state}
+            orientation={orientation}
+        >
+            <FluentSwitch
+                label={props.label}
+                disabled={props.disabled}
+                labelPosition={label_postion}
+                onChange={onChange}
+                {...otherProps}
+            />
+        </Field>
     );
 };
 

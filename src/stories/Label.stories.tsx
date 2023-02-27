@@ -2,7 +2,7 @@
 import React from "react";
 import Label from "../components/text/Label";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { withHarness } from "./withHarness";
+import { withHarness, omitArgs } from "./withHarness";
 
 const setProps = (): void => {};
 
@@ -10,11 +10,9 @@ export default {
     component: Label,
     title: "text/Label",
     argTypes: {
-        id: { table: { disable: true } },
-        key: { table: { disable: true } },
+        ...omitArgs,
         style: { table: { disable: true } },
         class_name: { table: { disable: true } },
-        setProps: { table: { disable: true } },
     },
     decorators: [withHarness],
 } as ComponentMeta<typeof Label>;

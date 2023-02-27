@@ -1,6 +1,11 @@
 import React, { useCallback } from "react";
 import { Checkbox as InnerCheckbox } from "@fluentui/react-components";
-import { DashComponentProps, StyledComponentProps } from "../../props";
+import { Field } from "@fluentui/react-components/unstable";
+import {
+    DashComponentProps,
+    StyledComponentProps,
+    FieldComponentProps,
+} from "../../props";
 
 type Props = {
     /**
@@ -36,14 +41,29 @@ type Props = {
      */
     size?: "medium" | "large";
 } & DashComponentProps &
-    StyledComponentProps;
+    StyledComponentProps &
+    FieldComponentProps;
 
 /**
  * Checkboxes give people a way to select one or more items from a group,
  * or switch between two mutually exclusive options (checked or unchecked).
  */
 const Checkbox = (props: Props) => {
-    const { disabled, label_position, setProps, ...otherProps } = props;
+    const {
+        // field props
+        id,
+        key,
+        label,
+        validation_message,
+        orientation,
+        validation_state,
+        required,
+        label_size,
+        disabled,
+        label_position,
+        setProps,
+        ...otherProps
+    } = props;
 
     const onChange = useCallback(
         (_ev, data) => {
@@ -57,12 +77,23 @@ const Checkbox = (props: Props) => {
     );
 
     return (
-        <InnerCheckbox
-            disabled={disabled}
-            labelPosition={label_position}
-            onChange={onChange}
-            {...otherProps}
-        />
+        <Field
+            id={id}
+            key={key}
+            label={label}
+            size={label_size}
+            required={required}
+            validationMessage={validation_message}
+            validationState={validation_state}
+            orientation={orientation}
+        >
+            <InnerCheckbox
+                disabled={disabled}
+                labelPosition={label_position}
+                onChange={onChange}
+                {...otherProps}
+            />
+        </Field>
     );
 };
 

@@ -1,6 +1,7 @@
 import React, { useCallback } from "react";
 import { Textarea as InnerTextarea } from "@fluentui/react-components";
-import { DashComponentProps } from "../../props";
+import { Field } from "@fluentui/react-components/unstable";
+import { DashComponentProps, FieldComponentProps } from "../../props";
 
 type Props = {
     /**
@@ -22,7 +23,8 @@ type Props = {
      * The value of the Textarea.
      */
     value?: string;
-} & DashComponentProps;
+} & DashComponentProps &
+    FieldComponentProps;
 
 /**
  * Textarea allows the user to enter and edit multiline text.
@@ -43,7 +45,19 @@ type Props = {
  *   requirements.
  */
 const Textarea = (props: Props) => {
-    const { setProps, ...otherProps } = props;
+    const {
+        // field props
+        id,
+        key,
+        label,
+        validation_message,
+        orientation,
+        validation_state,
+        required,
+        label_size,
+        setProps,
+        ...otherProps
+    } = props;
 
     const onChange = useCallback(
         (_ev, data) => {
@@ -56,7 +70,20 @@ const Textarea = (props: Props) => {
         [setProps]
     );
 
-    return <InnerTextarea onChange={onChange} {...otherProps}></InnerTextarea>;
+    return (
+        <Field
+            id={id}
+            key={key}
+            label={label}
+            size={label_size}
+            required={required}
+            validationMessage={validation_message}
+            validationState={validation_state}
+            orientation={orientation}
+        >
+            <InnerTextarea onChange={onChange} {...otherProps}></InnerTextarea>
+        </Field>
+    );
 };
 
 Textarea.defaultProps = {

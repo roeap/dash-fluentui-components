@@ -1,23 +1,14 @@
 import React, { useCallback } from "react";
 import {
     Slider as FluentSlider,
-    useId,
-    Label,
     SliderProps,
-    makeStyles,
-    shorthands,
 } from "@fluentui/react-components";
-import { DashComponentProps, StyledComponentProps } from "../../props";
-
-const useStyles = makeStyles({
-    root: {
-        // Stack the label above the field with a gap
-        display: "grid",
-        gridTemplateRows: "repeat(1fr)",
-        justifyItems: "start",
-        ...shorthands.gap("2px"),
-    },
-});
+import { Field } from "@fluentui/react-components/unstable";
+import {
+    DashComponentProps,
+    StyledComponentProps,
+    FieldComponentProps,
+} from "../../props";
 
 type Props = {
     /**
@@ -60,15 +51,29 @@ type Props = {
      */
     disabled?: boolean;
 } & DashComponentProps &
-    StyledComponentProps;
+    StyledComponentProps &
+    FieldComponentProps;
 
 /**
  * A Slider represents an input that allows user to choose a value from within a specific range.
  */
 const Slider = (props: Props) => {
-    const { id, key, value, label, disabled, setProps, ...otherProps } = props;
-    const sliderId = useId();
-    const styles = useStyles();
+    const {
+        // field props
+        id,
+        key,
+        label,
+        validation_message,
+        orientation,
+        validation_state,
+        required,
+        label_size,
+        // slider props
+        value,
+        disabled,
+        setProps,
+        ...otherProps
+    } = props;
     const onChange: SliderProps["onChange"] = useCallback(
         (_, data) => {
             if (!disabled && setProps) {
@@ -79,17 +84,24 @@ const Slider = (props: Props) => {
     );
 
     return (
-        <div id={id} key={key} className={styles.root}>
-            {label && <Label htmlFor={sliderId}>{label}</Label>}
+        <Field
+            id={id}
+            key={key}
+            label={label}
+            size={label_size}
+            required={required}
+            validationMessage={validation_message}
+            validationState={validation_state}
+            orientation={orientation}
+        >
             <FluentSlider
                 aria-valuetext={`Value is ${value}`}
                 value={value}
                 onChange={onChange}
-                id={sliderId}
                 disabled={disabled}
                 {...otherProps}
             />
-        </div>
+        </Field>
     );
 };
 

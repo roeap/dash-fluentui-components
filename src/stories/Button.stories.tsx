@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import Button from "../components/button/Button";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { withHarness } from "./withHarness";
+import { withHarness, omitArgs } from "./withHarness";
 
 export default {
     component: Button,
     title: "button/Button",
     argTypes: {
-        id: { table: { disable: true } },
-        key: { table: { disable: true } },
+        ...omitArgs,
         style: { table: { disable: true } },
         class_name: { table: { disable: true } },
-        setProps: { table: { disable: true } },
         loading_state: { table: { disable: true } },
         n_clicks: { table: { disable: true } },
     },
