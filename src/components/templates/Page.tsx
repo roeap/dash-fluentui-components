@@ -38,11 +38,11 @@ export type Props = {
  * A page within a multi page layout
  */
 const Page = (props: Props) => {
-    const { children, controls, page_key } = props;
+    const { children, page_key, controls } = props;
     const { selectedKey, cbControls } = useContext(PagesContext);
 
     useEffect(() => {
-        if (selectedKey === page_key) cbControls(controls);
+        cbControls((curr) => ({ ...curr, [page_key]: controls }));
     }, [selectedKey, cbControls, controls, page_key]);
 
     if (selectedKey !== page_key) return null;

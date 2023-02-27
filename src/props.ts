@@ -65,3 +65,33 @@ export type DashLoadingState = {
      */
     component_name: string;
 };
+
+export type FieldComponentProps = {
+    /**
+     * The label associated with the field.
+     */
+    label?: string;
+    /**
+     * A message about the validation state. By default, this is an error message,
+     * but it can be a success, warning, or custom message by setting validationState.
+     */
+    validation_message?: string;
+    /**
+     * The orientation of the label relative to the field component. This only affects the label,
+     * and not the validationMessage or hint (which always appear below the field component).
+     */
+    orientation?: "horizontal" | "vertical";
+    /**
+     * The validationState affects the display of the validationMessage and validationMessageIcon.
+     */
+    validation_state?: "none" | "success" | "warning" | "error";
+    /**
+     * Marks the Field as required. If true, an asterisk will be appended to the label,
+     * and aria-required will be set on the Field's child.
+     */
+    required?: boolean;
+    /**
+     * The size of the Field's label.
+     */
+    label_size?: "small" | "medium" | "large";
+};

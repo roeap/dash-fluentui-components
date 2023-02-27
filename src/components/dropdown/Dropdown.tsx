@@ -3,23 +3,9 @@ import {
     Dropdown as FluentDropdown,
     Option,
     DropdownProps,
-    makeStyles,
-    shorthands,
-    useId,
 } from "@fluentui/react-components";
 import { Field } from "@fluentui/react-components/unstable";
-import { DashComponentProps } from "../../props";
-
-const useStyles = makeStyles({
-    root: {
-        // Stack the label above the field with a gap
-        display: "grid",
-        gridTemplateRows: "repeat(1fr)",
-        justifyItems: "start",
-        ...shorthands.gap("2px"),
-        maxWidth: "400px",
-    },
-});
+import { DashComponentProps, FieldComponentProps } from "../../props";
 
 type Option = {
     /**
@@ -39,11 +25,6 @@ type Option = {
 };
 
 type Props = {
-    /**
-     * A label to be displayed above the dropdown component.
-     */
-    label?: string;
-
     /**
      * The value of the input.
      */
@@ -78,7 +59,8 @@ type Props = {
      * Controls the colors and borders of the combobox trigger.
      */
     appearance: "outline" | "underline" | "filled-darker" | "filled-lighter";
-} & DashComponentProps;
+} & DashComponentProps &
+    FieldComponentProps;
 
 /**
  * A Dropdown is a selection component composed of a button and a list of options.
@@ -87,9 +69,16 @@ type Props = {
  */
 const Dropdown = (props: Props) => {
     const {
+        // field props
         id,
         key,
         label,
+        validation_message,
+        orientation,
+        validation_state,
+        required,
+        label_size,
+        // dropdown props
         options,
         setProps,
         disabled,
@@ -106,8 +95,17 @@ const Dropdown = (props: Props) => {
     );
 
     return (
-        <Field id={id} key={key} label={label}>
+        <Field
+            key={key}
+            label={label}
+            size={label_size}
+            required={required}
+            validationMessage={validation_message}
+            validationState={validation_state}
+            orientation={orientation}
+        >
             <FluentDropdown
+                id={id}
                 onOptionSelect={onOptionSelect}
                 selectedOptions={value}
                 {...otherProps}

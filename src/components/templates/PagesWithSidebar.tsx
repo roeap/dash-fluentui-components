@@ -1,4 +1,4 @@
-import React, { ReactNode, useState, useMemo } from "react";
+import React, { ReactNode, useState, useMemo, useContext, FC } from "react";
 import { tokens } from "@fluentui/react-theme";
 import {
     makeStyles,
@@ -50,6 +50,11 @@ type Props = {
      * Object that holds the loading state object coming from dash-render+er
      */
     loading_state?: DashLoadingState;
+
+    /**
+     * Defines CSS styles which will be applied to content container.
+     */
+    content_style?: object;
 } & DashComponentProps;
 
 const useStyles = makeStyles({
@@ -91,11 +96,14 @@ const useStyles = makeStyles({
             backgroundColor: tokens.colorBrandForeground1,
         },
     },
+    controlsHidden: { display: "none" },
 });
 
 type Context = {
     selectedKey: string;
-    cbControls: (node: ReactNode) => void;
+    cbControls: React.Dispatch<
+        React.SetStateAction<Record<string, React.ReactNode>>
+    >;
 };
 
 export const PagesContext = React.createContext<Context>({
@@ -103,17 +111,39 @@ export const PagesContext = React.createContext<Context>({
     cbControls: undefined,
 });
 
+type ControlProps = {
+    page_key: string;
+};
+
+const Controls: FC<ControlProps> = (props) => {
+    const { children, page_key } = props;
+    const classes = useStyles();
+    const { selectedKey } = useContext(PagesContext);
+    return (
+        <div
+            className={
+                selectedKey === page_key
+                    ? classes.controls
+                    : classes.controlsHidden
+            }
+        >
+            {children}
+        </div>
+    );
+};
+
 export const PagesWithSidebar = (props: Props) => {
     const {
         selected_key,
         children,
         sidebar_width,
+        content_style,
         // collapsible,
         // sidebar_collapsed_width,
         setProps,
     } = props;
     const classes = useStyles();
-    const [controls, setControls] = useState<ReactNode>(undefined);
+    const [controls, setControls] = useState<Record<string, ReactNode>>({});
 
     const menu = useMemo(() => {
         const menuItems = parseChildrenToArray(children)
@@ -150,18 +180,24 @@ export const PagesWithSidebar = (props: Props) => {
             value={{ selectedKey: selected_key, cbControls: setControls }}
         >
             <div className={classes.root}>
-                <ResizePanel initialWidth={300} minWidth={200}>
+                <ResizePanel initialWidth={sidebar_width} minWidth={200}>
                     <ResizeContent>
                         <div className={classes.sidebar}>
                             {menu}
-                            <div className={classes.controls}>{controls}</div>
+                            {Object.entries(controls).map(([key, node]) => (
+                                <Controls key={key} page_key={key}>
+                                    {node}
+                                </Controls>
+                            ))}
                         </div>
                     </ResizeContent>
                     <ResizeHandleRight>
                         <div className={classes.resizeHandle} />
                     </ResizeHandleRight>
                 </ResizePanel>
-                <div className={classes.content}>{children}</div>
+                <div className={classes.content} style={content_style}>
+                    {children}
+                </div>
             </div>
         </PagesContext.Provider>
     );
@@ -170,7 +206,7 @@ export const PagesWithSidebar = (props: Props) => {
 PagesWithSidebar.defaultProps = {
     collapsible: false,
     collapsed: false,
-    sidebar_width: 250,
+    sidebar_width: 300,
     sidebar_collapsed_width: 80,
 };
 
