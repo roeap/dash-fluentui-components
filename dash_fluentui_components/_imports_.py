@@ -12,11 +12,11 @@ from .Label import Label
 from .MessageBar import MessageBar
 from .Page import Page
 from .PagesWithSidebar import PagesWithSidebar
-from .Pivot import Pivot
-from .PivotItem import PivotItem
 from .RadioGroup import RadioGroup
 from .Slider import Slider
 from .Switch import Switch
+from .Tab import Tab
+from .TabList import TabList
 from .Text import Text
 from .Textarea import Textarea
 from .ToggleButton import ToggleButton
@@ -33,11 +33,11 @@ __all__ = [
     "ComboBox",
     "Dropdown",
     "MessageBar",
-    "Pivot",
-    "PivotItem",
     "RadioGroup",
     "Slider",
     "Switch",
+    "Tab",
+    "TabList",
     "Page",
     "PagesWithSidebar",
     "Label",
