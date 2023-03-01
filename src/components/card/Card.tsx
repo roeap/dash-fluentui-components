@@ -1,4 +1,4 @@
-import React, { useCallback, FC, ReactNode } from "react";
+import React, { useCallback, FC } from "react";
 import {
     Card as FluentCard,
     CardProps,
@@ -51,10 +51,31 @@ type Props = {
      * Content displayed in card header
      */
     header?: JSX.Element;
+
     /**
      * Content displayed in card footer
      */
     footer?: JSX.Element;
+
+    /**
+     * Styles applied to header container
+     */
+    header_style?: object;
+
+    /**
+     * CSS class applied to header container
+     */
+    header_class?: string;
+
+    /**
+     * Styles applied to footer container
+     */
+    footer_style?: object;
+
+    /**
+     * CSS class applied to footer container
+     */
+    footer_class?: string;
 } & DashComponentProps &
     StyledComponentProps;
 
@@ -63,7 +84,18 @@ type Props = {
  * It's main function is to provide the scaffolding for hosting actions and content for a single topic within a card.
  */
 export const Card: FC<Props> = (props) => {
-    const { children, header, footer, setProps, ...otherProps } = props;
+    const {
+        children,
+        header,
+        footer,
+        class_name,
+        header_class,
+        header_style,
+        footer_class,
+        footer_style,
+        setProps,
+        ...otherProps
+    } = props;
 
     const onSelectionChange: CardProps["onSelectionChange"] = useCallback(
         (_ev, data) => {
@@ -77,10 +109,24 @@ export const Card: FC<Props> = (props) => {
     );
 
     return (
-        <FluentCard {...otherProps} onSelectionChange={onSelectionChange}>
-            {header && <CardHeader header={header} />}
+        <FluentCard
+            className={class_name}
+            onSelectionChange={onSelectionChange}
+            {...otherProps}
+        >
+            {header && (
+                <CardHeader
+                    header={header}
+                    className={header_class}
+                    style={header_style}
+                />
+            )}
             <CardPreview>{children}</CardPreview>
-            {footer && <CardFooter>{footer}</CardFooter>}
+            {footer && (
+                <CardFooter className={footer_class} style={footer_style}>
+                    {footer}
+                </CardFooter>
+            )}
         </FluentCard>
     );
 };
