@@ -29,6 +29,9 @@ type Props = {
      */
     trigger?: JSX.Element;
 
+    /**
+     * Additional components - often buttons for invoking actions - that are rendered in the Dialog footer.
+     */
     actions?: ReactNode;
 
     trigger_action?: JSX.Element;

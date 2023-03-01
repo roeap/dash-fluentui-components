@@ -3,13 +3,11 @@ from .Card import Card
 from .Checkbox import Checkbox
 from .ComboBox import ComboBox
 from .CompoundButton import CompoundButton
-from .DatePicker import DatePicker
 from .Dialog import Dialog
 from .Divider import Divider
 from .Dropdown import Dropdown
 from .FluentProvider import FluentProvider
 from .Label import Label
-from .MessageBar import MessageBar
 from .Page import Page
 from .PagesWithSidebar import PagesWithSidebar
 from .RadioGroup import RadioGroup
@@ -27,12 +25,10 @@ __all__ = [
     "ToggleButton",
     "Card",
     "Checkbox",
-    "DatePicker",
     "Dialog",
     "Divider",
     "ComboBox",
     "Dropdown",
-    "MessageBar",
     "RadioGroup",
     "Slider",
     "Switch",

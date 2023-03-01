@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Dialog } from "../components/dialog";
+import { Dialog } from "../components/dialog/Dialog";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { Button } from "@fluentui/react-components";
 import { withHarness, omitArgs } from "./withHarness";

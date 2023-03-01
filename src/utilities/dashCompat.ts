@@ -1,4 +1,3 @@
-import { DropdownMenuItemType } from "@fluentui/react/lib/Dropdown";
 import { isNil } from "ramda";
 
 export interface IDashItem {
@@ -29,38 +28,6 @@ export const transformOption = (option: IDashItem): object => {
         delete option.icon;
     }
     return option;
-};
-
-export const generateOptions = (options: IDashItem[]): object[] => {
-    // reduce function to merge lists and insert separator element
-    // eslint-disable-next-line
-    const reducer = (accumulator: any[], currentValue: any[]): any[] => [
-        ...accumulator,
-        { key: "divider", text: "-", itemType: DropdownMenuItemType.Divider },
-        ...currentValue,
-    ];
-    let newOptions = [];
-    if (!Array.isArray(options)) {
-        // generate a list containing component specific elements for
-        // creating headers and separators in the dropdown options list
-        const prunedOptions = Object.entries(options).map(([key, value]) => {
-            const options = [
-                {
-                    key: key.toLowerCase() + "Header",
-                    text: key,
-                    itemType: DropdownMenuItemType.Header,
-                },
-            ];
-            // eslint-disable-next-line
-            // @ts-ignore
-            options.push(...value.map(transformOption));
-            return options;
-        });
-        newOptions = prunedOptions.reduce(reducer);
-    } else {
-        newOptions = options.map(transformOption);
-    }
-    return newOptions;
 };
 
 function isNodeArray<T>(node: T | T[]): node is T[] {

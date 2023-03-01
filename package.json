@@ -13,7 +13,6 @@
   },
   "author": "Robert Pack <robert.pack@basf.com>",
   "dependencies": {
-    "@fluentui/react": "^8.103.4",
     "@fluentui/react-components": "^9.15.6",
     "@fluentui/react-hooks": "^8.6.14",
     "fuse.js": "^6.6.2",

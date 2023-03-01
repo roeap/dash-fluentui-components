@@ -11,10 +11,8 @@ import Card from "./components/card/Card";
 import Checkbox from "./components/checkbox/Checkbox";
 import ChoiceGroup from "./components/radio/RadioGroup";
 import ComboBox from "./components/dropdown/ComboBox";
-import DatePicker from "./components/date_picker/DatePicker";
 
 import Dropdown from "./components/dropdown/Dropdown";
-import MessageBar from "./components/message/MessageBar";
 import TabList from "./components/tab_list/TabList";
 import Tab from "./components/tab_list/Tab";
 import Divider from "./components/divider/Divider";
@@ -40,11 +38,9 @@ export {
     Checkbox,
     ChoiceGroup,
     ComboBox,
-    DatePicker,
     Dialog,
     Dropdown,
     Label,
-    MessageBar,
     TabList,
     Tab,
     Divider,
