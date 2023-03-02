@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { Checkbox as InnerCheckbox } from "@fluentui/react-components";
+import { Checkbox as FluentCheckbox } from "@fluentui/react-components";
 import { Field } from "@fluentui/react-components/unstable";
 import {
     DashComponentProps,
@@ -87,7 +87,7 @@ const Checkbox = (props: Props) => {
             validationState={validation_state}
             orientation={orientation}
         >
-            <InnerCheckbox
+            <FluentCheckbox
                 disabled={disabled}
                 labelPosition={label_position}
                 onChange={onChange}
