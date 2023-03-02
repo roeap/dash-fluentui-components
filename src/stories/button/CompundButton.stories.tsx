@@ -1,30 +1,28 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import React, { useState } from "react";
-import ToggleButton from "../components/button/ToggleButton";
+import CompoundButton from "../../components/button/CompoundButton";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { withHarness, omitArgs } from "./withHarness";
+import { withHarness, omitArgs } from "../withHarness";
 
 export default {
-    component: ToggleButton,
-    title: "button/ToggleButton",
+    component: CompoundButton,
+    title: "button/CompoundButton",
     argTypes: {
         ...omitArgs,
         style: { table: { disable: true } },
         class_name: { table: { disable: true } },
         loading_state: { table: { disable: true } },
         n_clicks: { table: { disable: true } },
-        checked: { table: { disable: true } },
     },
     decorators: [withHarness],
-} as ComponentMeta<typeof ToggleButton>;
+} as ComponentMeta<typeof CompoundButton>;
 
-const Template: ComponentStory<typeof ToggleButton> = (args) => {
+const Template: ComponentStory<typeof CompoundButton> = (args) => {
+    const [props, setProps] = useState({ n_clicks: 0 });
     const { children, ...otherArgs } = args;
-    const [props, setProps] = useState({ checked: false });
     return (
-        <ToggleButton setProps={setProps} {...otherArgs} {...props}>
+        <CompoundButton setProps={setProps} {...otherArgs} {...props}>
             {children}
-        </ToggleButton>
+        </CompoundButton>
     );
 };
 
@@ -34,5 +32,6 @@ Primary.args = {
     size: "medium",
     shape: "rounded",
     disabled: false,
-    children: "Button",
+    secondary_content: "secondary content",
+    children: "main content",
 };

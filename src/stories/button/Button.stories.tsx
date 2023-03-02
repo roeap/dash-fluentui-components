@@ -1,14 +1,11 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-import React from "react";
-import CompoundButton from "../components/button/CompoundButton";
+import React, { useState } from "react";
+import Button from "../../components/button/Button";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { withHarness, omitArgs } from "./withHarness";
-
-const setProps = (): void => {};
+import { withHarness, omitArgs } from "../withHarness";
 
 export default {
-    component: CompoundButton,
-    title: "button/CompoundButton",
+    component: Button,
+    title: "button/Button",
     argTypes: {
         ...omitArgs,
         style: { table: { disable: true } },
@@ -17,14 +14,15 @@ export default {
         n_clicks: { table: { disable: true } },
     },
     decorators: [withHarness],
-} as ComponentMeta<typeof CompoundButton>;
+} as ComponentMeta<typeof Button>;
 
-const Template: ComponentStory<typeof CompoundButton> = (args) => {
+const Template: ComponentStory<typeof Button> = (args) => {
+    const [props, setProps] = useState({ n_clicks: 0 });
     const { children, ...otherArgs } = args;
     return (
-        <CompoundButton setProps={setProps} {...otherArgs}>
+        <Button setProps={setProps} {...otherArgs} {...props}>
             {children}
-        </CompoundButton>
+        </Button>
     );
 };
 
@@ -34,6 +32,5 @@ Primary.args = {
     size: "medium",
     shape: "rounded",
     disabled: false,
-    secondary_content: "secondary content",
-    children: "main content",
+    children: "Button",
 };
