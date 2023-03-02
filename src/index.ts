@@ -30,6 +30,7 @@ import Label from "./components/text/Label";
 // templates
 import PagesWithSidebar from "./components/templates/PagesWithSidebar";
 import Page from "./components/templates/Page";
+import TabbedPages from "./components/templates/TabbedPages";
 
 export {
     FluentProvider,
@@ -50,4 +51,5 @@ export {
     Switch,
     PagesWithSidebar,
     Page,
+    TabbedPages,
 };

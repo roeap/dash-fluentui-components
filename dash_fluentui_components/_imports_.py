@@ -1,8 +1,10 @@
+from .Badge import Badge
 from .Button import Button
 from .Card import Card
 from .Checkbox import Checkbox
 from .ComboBox import ComboBox
 from .CompoundButton import CompoundButton
+from .CounterBadge import CounterBadge
 from .Dialog import Dialog
 from .Divider import Divider
 from .Dropdown import Dropdown
@@ -14,12 +16,15 @@ from .RadioGroup import RadioGroup
 from .Slider import Slider
 from .Switch import Switch
 from .Tab import Tab
+from .TabbedPage import TabbedPage
 from .TabList import TabList
 from .Text import Text
 from .Textarea import Textarea
 from .ToggleButton import ToggleButton
 
 __all__ = [
+    "Badge",
+    "CounterBadge",
     "Button",
     "CompoundButton",
     "ToggleButton",
@@ -36,6 +41,7 @@ __all__ = [
     "TabList",
     "Page",
     "PagesWithSidebar",
+    "TabbedPage",
     "Label",
     "Text",
     "Textarea",
