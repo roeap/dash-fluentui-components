@@ -1,15 +1,13 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import Checkbox from "../Checkbox";
+import Switch from "../Switch";
 import userEvent from "@testing-library/user-event";
 
-describe("Checkbox", () => {
+describe("Switch", () => {
     test("renders its label", () => {
-        const { container } = render(
-            <Checkbox label="Checkbox label"></Checkbox>
-        );
+        const { container } = render(<Switch label="Switch label"></Switch>);
 
-        expect(container).toHaveTextContent("Checkbox label");
+        expect(container).toHaveTextContent("Switch label");
     });
 
     test("tracks checked with checked", async () => {
@@ -17,7 +15,7 @@ describe("Checkbox", () => {
         const mockSetProps = jest.fn();
 
         const container = render(
-            <Checkbox setProps={mockSetProps} label="Clickable" />
+            <Switch setProps={mockSetProps} label="Clickable" />
         );
 
         expect(mockSetProps.mock.calls).toHaveLength(0);

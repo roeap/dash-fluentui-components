@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React, { useState } from "react";
-import Textarea from "../components/text/Textarea";
+import Textarea from "../../components/text/Textarea";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { withHarness, omitArgs } from "./withHarness";
+import { withHarness, omitArgs } from "../withHarness";
 
 export default {
     component: Textarea,

@@ -10,22 +10,22 @@ type Props = {
     /**
      * A label to be displayed along with the toggle component.
      */
-    label: string;
+    label?: string;
 
     /**
      * Checked state of the toggle
      */
-    checked: boolean;
+    checked?: boolean;
 
     /**
      * The position of the label relative to the Switch.
      */
-    label_postion: "before" | "after" | "above";
+    label_postion?: "before" | "after" | "above";
 
     /**
      * If true, the switch is disabled and can't be clicked on.
      */
-    disabled: boolean;
+    disabled?: boolean;
 } & DashComponentProps &
     FieldComponentProps;
 
@@ -73,8 +73,7 @@ const Switch = (props: Props) => {
             orientation={orientation}
         >
             <FluentSwitch
-                label={props.label}
-                disabled={props.disabled}
+                disabled={disabled}
                 labelPosition={label_postion}
                 onChange={onChange}
                 {...otherProps}

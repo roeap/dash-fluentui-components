@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React from "react";
-import Label from "../components/text/Label";
+import Label from "../../components/text/Label";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { withHarness, omitArgs } from "./withHarness";
+import { withHarness, omitArgs } from "../withHarness";
 
 const setProps = (): void => {};
 
