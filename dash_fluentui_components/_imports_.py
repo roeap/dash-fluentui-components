@@ -16,7 +16,7 @@ from .RadioGroup import RadioGroup
 from .Slider import Slider
 from .Switch import Switch
 from .Tab import Tab
-from .TabbedPage import TabbedPage
+from .TabbedPages import TabbedPages
 from .TabList import TabList
 from .Text import Text
 from .Textarea import Textarea
@@ -41,7 +41,7 @@ __all__ = [
     "TabList",
     "Page",
     "PagesWithSidebar",
-    "TabbedPage",
+    "TabbedPages",
     "Label",
     "Text",
     "Textarea",

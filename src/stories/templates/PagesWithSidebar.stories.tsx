@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React, { useState } from "react";
-import PagesWithSidebar from "../components/templates/PagesWithSidebar";
-import Page from "../components/templates/Page";
+import PagesWithSidebar from "../../components/templates/PagesWithSidebar";
+import Page from "../../components/templates/Page";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
 export default {
