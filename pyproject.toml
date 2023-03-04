@@ -1,11 +1,12 @@
 [tool.poetry]
 name = "dash-fluentui-components"
-version = "0.0.8"
+version = "0.0.9"
 description = "FluentUI components for Plotly Dash."
 authors = ["Robert Pack <robstar.pack@gmail.com>"]
 license = "MIT"
 readme = "README.md"
 classifiers = ["Framework :: Dash"]
+repository = "https://github.com/roeap/dash-fluentui-components"
 # we have to tell poetry to include all *.py files, which may seem strange for a python package... :)
 # reason being that these files are largely auto-generated and
 include = [
