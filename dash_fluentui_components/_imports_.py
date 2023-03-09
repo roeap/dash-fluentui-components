@@ -9,6 +9,7 @@ from .Dialog import Dialog
 from .Divider import Divider
 from .Dropdown import Dropdown
 from .FluentProvider import FluentProvider
+from .Input import Input
 from .Label import Label
 from .Page import Page
 from .PagesWithSidebar import PagesWithSidebar
@@ -34,6 +35,7 @@ __all__ = [
     "Divider",
     "ComboBox",
     "Dropdown",
+    "Input",
     "RadioGroup",
     "Slider",
     "Switch",
