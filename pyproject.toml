@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "dash-fluentui-components"
-version = "0.0.9"
+version = "0.0.8"
 description = "FluentUI components for Plotly Dash."
 authors = ["Robert Pack <robstar.pack@gmail.com>"]
 license = "MIT"
