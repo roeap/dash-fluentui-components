@@ -5,7 +5,7 @@ import {
     CardHeader,
     CardFooter,
     CardPreview,
-} from "@fluentui/react-components/unstable";
+} from "@fluentui/react-components";
 import {
     DashComponentProps,
     DashLoadingState,

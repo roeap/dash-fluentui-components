@@ -13,7 +13,7 @@
   },
   "author": "Robert Pack <robert.pack@basf.com>",
   "dependencies": {
-    "@fluentui/react-components": "^9.16",
+    "@fluentui/react-components": "^9.18.2",
     "fuse.js": "^6.6.2",
     "ramda": "^0.28.0",
     "react-draggable": "^4.4.5"
