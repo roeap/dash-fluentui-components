@@ -1,6 +1,6 @@
 {
   "name": "dash-fluentui-components",
-  "version": "0.0.10",
+  "version": "0.1.0",
   "description": "FluentUI components for Plotly Dash",
   "main": "src/index.ts",
   "typings": "@types/*",
